@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>बार्बर रिमाइंडर</title>
+<style>
+:root{--bg:#f2f4f7;--card:#fff;--ink:#14202b;--mut:#5d6b78;--red:#c8102e;--blue:#1f4e8c;--line:#dde3ea}
+@media (prefers-color-scheme:dark){:root{--bg:#10171e;--card:#1a232c;--ink:#eef2f6;--mut:#93a1af;--line:#2b3742;--blue:#6ea3e6}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,"Noto Sans Devanagari",sans-serif}
+.pole{height:10px;background:repeating-linear-gradient(135deg,var(--red) 0 14px,#fff 14px 28px,var(--blue) 28px 42px,#fff 42px 56px)}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;max-width:760px;margin:auto}
+h1{font-size:21px;margin:0;font-weight:700}
+main{max-width:760px;margin:auto;padding:0 16px 40px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.stat b{display:block;font-size:26px;line-height:1.1}.stat span{font-size:13px;color:var(--mut)}
+nav{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto}
+nav button{flex:1;white-space:nowrap;padding:10px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;font:inherit;font-weight:600;cursor:pointer}
+nav button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:12px}
+h2{font-size:17px;margin:0 0 10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line);flex-wrap:wrap}
+.row:first-of-type{border-top:0}
+.row small{display:block;color:var(--mut)}
+.acts{display:flex;gap:6px;flex-wrap:wrap}
+button.b{padding:9px 13px;border:0;border-radius:8px;font:inherit;font-weight:600;cursor:pointer;color:#fff;background:var(--blue)}
+button.ghost{background:transparent;color:var(--mut);border:1px solid var(--line)}
+a.b{padding:9px 13px;border-radius:8px;font-weight:600;color:#fff;background:#1a7f4b;text-decoration:none;display:inline-block}
+input,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:var(--bg);color:var(--ink);margin:4px 0 12px}
+label{font-weight:600;font-size:14px}
+.empty{color:var(--mut);padding:6px 0}
+.err{color:var(--red);min-height:22px;font-size:14px}
+.auth{max-width:380px;margin:40px auto;padding:0 16px}
+.tog{display:flex;align-items:center;gap:10px;margin-bottom:12px}.tog input{width:auto;margin:0}
+</style>
+</head>
+<body>
+<div class="pole"></div>
+<div id="app"></div>
+<script>
+var LICENSE_URL="https://raw.githubusercontent.com/govindsky07-oss/Barber/main/licenses.json";
+var CONTACT="";
+var $=function(i){return document.getElementById(i)};
+var USERS_KEY="br_users",SESSION_KEY="br_session";
+var shop=null,db=null,tab="today",mode="login";
+var DEF={gap:20,msg:"नमस्कार {naam} जी, मैं {dukaan} से बोल रहा हूँ। आपके बाल काफी बड़े हो गए होंगे, कटवाने का समय हो गया है। आइए, हम आपका इंतज़ार कर रहे हैं।",bdayOn:true,bdayMsg:"जन्मदिन मुबारक {naam} जी! {dukaan} की तरफ से ढेर सारी शुभकामनाएँ। आज आइए और बाल कटवाइए, आपको खास डिस्काउंट मिलेगा।"};
+
+function rd(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+function wr(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){alert("डेटा सेव नहीं हो पाया")}}
+function hash(s){var h=5381;for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))|0}return String(h)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function today(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function days(a,b){return Math.round((new Date(b+"T00:00:00")-new Date(a+"T00:00:00"))/864e5)}
+function save(){wr("br_data_"+shop,db)}
+function lastVisit(c){return c.visits.length?c.visits[c.visits.length-1]:null}
+function fmt(d){if(!d)return "—";var p=d.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
+function msgFor(c,tpl){return tpl.split("{naam}").join(c.name).split("{dukaan}").join(shop)}
+function waLink(c,tpl){var p=c.phone.replace(/\D/g,"");if(p.length===10)p="91"+p;return "https://wa.me/"+p+"?text="+encodeURIComponent(msgFor(c,tpl))}
+
+function dueList(){
+  var t=today();
+  return db.customers.filter(function(c){
+    var base=lastVisit(c)||c.joined;
+    if(days(base,t)<db.settings.gap)return false;
+    if(c.lastReminded&&c.lastReminded>=base&&days(c.lastReminded,t)<db.settings.gap)return false;
+    return true;
+  }).sort(function(a,b){return days(lastVisit(b)||b.joined,t)-days(lastVisit(a)||a.joined,t)});
+}
+function bdayList(){
+  if(!db.settings.bdayOn)return [];
+  var t=today(),md=t.slice(5),y=t.slice(0,4);
+  return db.customers.filter(function(c){return c.dob&&c.dob.slice(5)===md&&c.lastBday!==y});
+}
+
+function render(){
+  if(!shop){renderAuth();return}
+  var t=today(),dl=dueList(),bl=bdayList();
+  var came=db.customers.filter(function(c){return lastVisit(c)===t}).length;
+  var h='<header><h1>✂ '+esc(shop)+'</h1><button class="b ghost" onclick="logout()">लॉगआउट</button></header><main>';
+  h+='<div class="stats"><div class="stat"><b>'+db.customers.length+'</b><span>कुल कस्टमर</span></div><div class="stat"><b>'+came+'</b><span>आज आए</span></div><div class="stat"><b>'+(dl.length+bl.length)+'</b><span>आज मैसेज भेजना है</span></div></div>';
+  var tabs=[["today","आज की लिस्ट"],["list","कस्टमर"],["add","जोड़ें"],["set","सेटिंग"]];
+  h+='<nav>'+tabs.map(function(x){return '<button class="'+(tab===x[0]?"on":"")+'" onclick="go(\''+x[0]+'\')">'+x[1]+'</button>'}).join("")+'</nav>';
+  if(tab==="today")h+=viewToday(dl,bl);
+  if(tab==="list")h+=viewList();
+  if(tab==="add")h+=viewAdd();
+  if(tab==="set")h+=viewSet();
+  $("app").innerHTML=h+'</main>';
+}
+
+function viewToday(dl,bl){
+  var h="";
+  if(db.settings.bdayOn){
+    h+='<div class="card"><h2>🎂 आज जन्मदिन</h2>';
+    h+=bl.length?bl.map(function(c){return row(c,"bday")}).join(""):'<div class="empty">आज किसी का जन्मदिन नहीं है।</div>';
+    h+='</div>';
+  }
+  h+='<div class="card"><h2>आज इन्हें मैसेज भेजना है</h2>';
+  h+=dl.length?dl.map(function(c){return row(c,"remind")}).join(""):'<div class="empty">आज किसी को रिमाइंडर नहीं भेजना है।</div>';
+  return h+'</div>';
+}
+function row(c,kind){
+  var t=today(),base=lastVisit(c)||c.joined,d=days(base,t);
+  var sub=kind==="bday"?esc(c.phone):esc(c.phone)+" · "+d+" दिन से नहीं आए";
+  var tpl=kind==="bday"?db.settings.bdayMsg:db.settings.msg;
+  return '<div class="row"><div><b>'+esc(c.name)+'</b><small>'+sub+'</small></div><div class="acts"><a class="b" href="'+waLink(c,tpl)+'" target="_blank" rel="noopener" onclick="markSent(\''+c.id+'\',\''+kind+'\')">व्हाट्सएप भेजें</a><button class="b" onclick="came(\''+c.id+'\')">आ गया ✓</button></div></div>';
+}
+function viewList(){
+  return '<div class="card"><input id="q" placeholder="नाम या नंबर से ढूँढें" oninput="filt()"><div id="lst">'+listRows("")+'</div></div>';
+}
+function listRows(q){
+  q=q.toLowerCase();
+  var a=db.customers.filter(function(c){return !q||c.name.toLowerCase().indexOf(q)>-1||c.phone.indexOf(q)>-1});
+  if(!a.length)return '<div class="empty">कोई कस्टमर नहीं मिला।</div>';
+  return a.map(function(c){
+    return '<div class="row"><div><b>'+esc(c.name)+'</b><small>'+esc(c.phone)+'</small><small>जुड़े: '+fmt(c.joined)+' · पिछली बार: '+fmt(lastVisit(c))+' · कुल '+c.visits.length+' बार</small></div><div class="acts"><button class="b" onclick="came(\''+c.id+'\')">आ गया ✓</button><button class="b ghost" onclick="del(\''+c.id+'\')">हटाएँ</button></div></div>';
+  }).join("");
+}
+function filt(){$("lst").innerHTML=listRows($("q").value)}
+function viewAdd(){
+  return '<div class="card"><h2>नया कस्टमर</h2><label>नाम</label><input id="n"><label>मोबाइल नंबर (10 अंक)</label><input id="p" type="tel" inputmode="numeric" maxlength="10"><label>जन्मदिन (ज़रूरी नहीं)</label><input id="d" type="date"><div class="err" id="e"></div><button class="b" onclick="addC()">कस्टमर जोड़ें</button></div>';
+}
+function viewSet(){
+  var s=db.settings;
+  return '<div class="card"><h2>रिमाइंडर सेटिंग</h2><label>कितने दिन बाद मैसेज भेजना है</label><input id="g" type="number" min="1" value="'+s.gap+'"><label>रिमाइंडर मैसेज</label><textarea id="m" rows="4">'+esc(s.msg)+'</textarea><div class="tog"><input type="checkbox" id="bo" '+(s.bdayOn?"checked":"")+'><label for="bo">जन्मदिन का मैसेज चालू रखें</label></div><label>जन्मदिन मैसेज (डिस्काउंट यहीं लिखें)</label><textarea id="bm" rows="4">'+esc(s.bdayMsg)+'</textarea><small style="color:var(--mut)">मैसेज में {naam} और {dukaan} अपने आप बदल जाएँगे।</small><br><br><button class="b" onclick="saveSet()">सेटिंग सेव करें</button></div><div class="card"><h2>डेटा बैकअप</h2><button class="b ghost" onclick="exportCsv()">कस्टमर लिस्ट डाउनलोड करें (CSV)</button></div>';
+}
+
+function go(t){tab=t;render()}
+function came(id){var c=db.customers.find(function(x){return x.id===id});if(!c)return;var t=today();if(lastVisit(c)!==t){c.visits.push(t);save()}render()}
+function markSent(id,kind){
+  var c=db.customers.find(function(x){return x.id===id});if(!c)return;
+  if(kind==="bday")c.lastBday=today().slice(0,4);else c.lastReminded=today();
+  save();setTimeout(render,600);
+}
+function del(id){if(!confirm("इस कस्टमर को हटाएँ?"))return;db.customers=db.customers.filter(function(x){return x.id!==id});save();render()}
+function addC(){
+  var n=$("n").value.trim(),p=$("p").value.replace(/\D/g,""),d=$("d").value;
+  if(!n){$("e").textContent="नाम लिखिए।";return}
+  if(p.length!==10){$("e").textContent="मोबाइल नंबर 10 अंक का होना चाहिए।";return}
+  if(db.customers.some(function(c){return c.phone===p})){$("e").textContent="यह नंबर पहले से जुड़ा है।";return}
+  db.customers.push({id:"c"+Date.now(),name:n,phone:p,dob:d,joined:today(),visits:[],lastReminded:null,lastBday:null});
+  save();tab="list";render();
+}
+function saveSet(){
+  var g=parseInt($("g").value,10);if(!(g>0)){alert("दिन सही लिखिए");return}
+  db.settings={gap:g,msg:$("m").value,bdayOn:$("bo").checked,bdayMsg:$("bm").value};
+  save();tab="today";render();
+}
+function exportCsv(){
+  var r=[["नाम","मोबाइल","जन्मदिन","जुड़ने की तारीख","पिछली विज़िट","कुल विज़िट"]];
+  db.customers.forEach(function(c){r.push([c.name,c.phone,c.dob||"",c.joined,lastVisit(c)||"",c.visits.length])});
+  var csv="\ufeff"+r.map(function(x){return x.map(function(v){return '"'+String(v).replace(/"/g,'""')+'"'}).join(",")}).join("\n");
+  var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="customers.csv";document.body.appendChild(a);a.click();a.remove();
+}
+
+function renderAuth(){
+  $("app").innerHTML='<div class="auth"><h1 style="text-align:center;margin-bottom:6px">✂ बार्बर रिमाइंडर</h1><p style="text-align:center;color:var(--mut);margin-top:0">कस्टमर को समय पर याद दिलाइए</p><div class="card"><nav><button class="'+(mode==="login"?"on":"")+'" onclick="setMode(\'login\')">लॉगिन</button><button class="'+(mode==="new"?"on":"")+'" onclick="setMode(\'new\')">नई दुकान</button></nav><label>दुकान का नाम</label><input id="s" autocomplete="username"><label>पासवर्ड</label><input id="w" type="password" autocomplete="current-password"><div class="err" id="e"></div><button class="b" style="width:100%" onclick="auth()">'+(mode==="login"?"लॉगिन करें":"दुकान बनाएँ")+'</button></div></div>';
+}
+function setMode(m){mode=m;renderAuth()}
+function auth(){
+  var s=$("s").value.trim(),w=$("w").value,u=rd(USERS_KEY,{});
+  if(!s||w.length<4){$("e").textContent="दुकान का नाम और कम से कम 4 अक्षर का पासवर्ड लिखिए।";return}
+  if(mode==="new"){
+    if(u[s]){$("e").textContent="यह दुकान पहले से बनी है, लॉगिन कीजिए।";return}
+    u[s]=hash(w);wr(USERS_KEY,u);wr("br_data_"+s,{customers:[],settings:DEF});
+  }else if(u[s]!==hash(w)){$("e").textContent="दुकान का नाम या पासवर्ड गलत है।";return}
+  openShop(s);
+}
+function openShop(s){
+  shop=s;db=rd("br_data_"+s,{customers:[],settings:DEF});
+  db.settings=Object.assign({},DEF,db.settings);
+  wr(SESSION_KEY,s);tab="today";render();
+}
+function logout(){shop=null;db=null;try{localStorage.removeItem(SESSION_KEY)}catch(e){}render()}
+
+function lock(msg){
+  $("app").innerHTML='<div class="auth"><h1 style="text-align:center">✂ बार्बर रिमाइंडर</h1><div class="card"><p>'+esc(msg||"चालू करने के लिए अपना कोड डालिए।")+'</p><label>आपका कोड</label><input id="cd"><button class="b" style="width:100%" onclick="unlock()">कोड लगाएँ</button>'+(CONTACT?'<p style="color:var(--mut)">कोड के लिए संपर्क करें: '+esc(CONTACT)+'</p>':'')+'</div></div>';
+}
+function unlock(){var c=$("cd").value.trim();if(!c)return;wr("br_code",c);location.reload()}
+function gate(go){
+  if(!LICENSE_URL){go();return}
+  var code=rd("br_code","");
+  if(!code){lock("");return}
+  fetch(LICENSE_URL+"?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(l){
+    var e=l[code];
+    if(e&&e>=today()){wr("br_ok",today());go()}else{wr("br_code","");lock("आपका ट्रायल या सब्सक्रिप्शन खत्म हो गया है।")}
+  }).catch(function(){
+    var ok=rd("br_ok","");
+    if(ok&&days(ok,today())<=3)go();else lock("इंटरनेट चालू करके दोबारा खोलिए।");
+  });
+}
+gate(function(){
+  var sess=rd(SESSION_KEY,null);
+  if(sess&&rd(USERS_KEY,{})[sess])openShop(sess);else render();
+});
+</script>
+</body>
+</html>
