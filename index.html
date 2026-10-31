@@ -2,37 +2,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>सलून बुक</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hind:wght@400;500;600;700&family=Teko:wght@500;600&display=swap">
 <style>
-/* Layout: एक संकरा मोबाइल कॉलम। ऊपर नाई के खंभे वाली पट्टी (इकलौता चटक रंग), नीचे शांत नीला-स्लेटी आधार। */
 :root{
   --bg:#EEF1F3; --surface:#FFFFFF; --ink:#12202B; --muted:#58697A; --line:#D6DDE2;
-  --accent:#B8322A; --on-accent:#FFFFFF; --blue:#1F4E79; --ok:#1E7A4C; --warn:#9A6200; --soft:#E4EAEE;
+  --accent:#B8322A; --on-accent:#FFFFFF; --blue:#1F4E79; --ok:#1E7A4C; --soft:#E4EAEE;
   --f-body:'Hind','Noto Sans Devanagari',system-ui,sans-serif;
   --f-display:'Teko','Hind',system-ui,sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0E161C; --surface:#16222B; --ink:#E8EEF2; --muted:#93A3AF; --line:#26353F;
-  --accent:#E2584D; --on-accent:#1A0B0A; --blue:#7FB2E0; --ok:#4CC38A; --warn:#E0A33A; --soft:#1D2B35; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0E161C; --surface:#16222B; --ink:#E8EEF2; --muted:#93A3AF; --line:#26353F;
-  --accent:#E2584D; --on-accent:#1A0B0A; --blue:#7FB2E0; --ok:#4CC38A; --warn:#E0A33A; --soft:#1D2B35; color-scheme:dark}
-
+  --accent:#E2584D; --on-accent:#1A0B0A; --blue:#7FB2E0; --ok:#4CC38A; --soft:#1D2B35; color-scheme:dark}}
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;
-  padding-block:0 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;
+  padding:0 max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
 .wrap{max-width:560px;margin:0 auto}
-.pole{height:8px;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px))) ;background:repeating-linear-gradient(-45deg,var(--accent) 0 12px,#fff 12px 24px,var(--blue) 24px 36px,#fff 36px 48px)}
+.pole{height:8px;margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));background:repeating-linear-gradient(-45deg,var(--accent) 0 12px,#fff 12px 24px,var(--blue) 24px 36px,#fff 36px 48px)}
 header{padding:14px 0 10px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
 h1{font-family:var(--f-display);font-weight:600;font-size:34px;line-height:1;margin:0;letter-spacing:.3px}
 .shop{color:var(--muted);font-size:14px}
-.demo{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--muted);margin-bottom:12px}
 h2{font-family:var(--f-display);font-weight:500;font-size:26px;line-height:1.1;margin:0 0 8px}
 h3{font-size:15px;margin:0 0 8px;font-weight:700}
-.seg{display:flex;gap:6px;background:var(--soft);padding:4px;border-radius:10px;margin-bottom:14px}
-.seg button{flex:1;border:0;background:transparent;color:var(--muted);font:600 15px var(--f-body);padding:9px 8px;border-radius:7px;cursor:pointer;min-width:0}
-.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
 .tabs{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px;padding-bottom:2px}
 .tabs button{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:600 14px var(--f-body);padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
 .tabs button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
@@ -54,9 +44,9 @@ h3{font-size:15px;margin:0 0 8px;font-weight:700}
 .chip:disabled{opacity:.4;cursor:not-allowed;text-decoration:line-through}
 .chip.day{display:flex;flex-direction:column;align-items:center;min-width:62px;line-height:1.25}
 label.f{display:block;font-size:14px;font-weight:600;margin:10px 0 4px}
-input[type=text],input[type=tel],input[type=password],input[type=number],input[type=search],textarea{width:100%;font:16px var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+input[type=text],input[type=tel],input[type=password],input[type=number],input[type=search],input[type=date],textarea{width:100%;font:16px var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
 textarea{min-height:92px;resize:vertical}
-input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,.opt:focus-within{outline:2px solid var(--blue);outline-offset:2px}
+input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:9px;background:var(--accent);color:var(--on-accent);font:700 16px var(--f-body);padding:12px 18px;cursor:pointer;text-decoration:none}
 .btn.block{width:100%}
 .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
@@ -73,7 +63,7 @@ input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,
 .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
 .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
-.stat b{display:block;font-family:var(--f-display);font-size:34px;line-height:1;font-weight:600;font-variant-numeric:tabular-nums}
+.stat b{display:block;font-family:var(--f-display);font-size:34px;line-height:1;font-weight:600}
 .stat span{font-size:13px;color:var(--muted)}
 .rank{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
 .rank:first-of-type{border-top:0}
@@ -83,10 +73,16 @@ input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,
 .set{display:grid;grid-template-columns:1fr 84px;gap:10px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
 .set:first-of-type{border-top:0}
 .set .l{display:flex;gap:10px;align-items:center}
-.set .l input{width:20px;height:20px;accent-color:var(--blue);flex:0 0 auto}
+.set .l input,.sv input[type=checkbox]{width:20px;height:20px;accent-color:var(--blue);flex:0 0 auto}
+.sv{display:grid;grid-template-columns:24px 1fr 84px;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.sv:first-of-type{border-top:0}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:10px 18px;border-radius:999px;font-size:14px;z-index:20;max-width:90vw}
 .okbox{border-color:var(--ok)}
-@media (prefers-reduced-motion:no-preference){.card,.stat{transition:border-color .15s}}
+.linkbox{word-break:break-all;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:13px;margin:6px 0}
+.demo{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:13px;color:var(--muted);margin-bottom:12px}
+#printarea{display:none}
+@media print{.wrap,.pole,.toast{display:none!important}#printarea{display:block!important;color:#000;background:#fff;font-family:var(--f-body)}
+  #printarea table{width:100%;border-collapse:collapse;font-size:12px}#printarea th,#printarea td{border:1px solid #999;padding:4px 6px;text-align:left}}
 </style>
 
 <div class="pole" aria-hidden="true"></div>
@@ -95,316 +91,439 @@ input:focus-visible,textarea:focus-visible,button:focus-visible,a:focus-visible,
     <h1>सलून बुक</h1>
     <div class="shop" id="shopname"></div>
   </header>
-  <div class="demo" id="demonote" hidden>यह प्रोटोटाइप है। इसमें दिखने वाले नाम, नंबर और बुकिंग नकली डेमो डेटा हैं। ग्राहक वाले पेज से बुकिंग करो, वह दुकानदार वाले पेज में दिख जाएगी।</div>
-  <div class="seg" id="modeseg" hidden role="group" aria-label="पेज चुनें">
-    <button id="m-cust" data-act="mode" data-v="cust">ग्राहक का पेज</button>
-    <button id="m-own" data-act="mode" data-v="own">दुकानदार का पेज</button>
-  </div>
-  <main id="app"></main>
+  <main id="app"><div class="empty">लोड हो रहा है…</div></main>
 </div>
 <div class="toast" id="toast" hidden></div>
+<div id="printarea"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
+/* ===== सिर्फ़ ये दो चीज़ें अपनी Supabase वाली चिपकानी हैं ===== */
+const CFG={
+  url:'PASTE_SUPABASE_URL_HERE',
+  key:'PASTE_ANON_PUBLIC_KEY_HERE'
+};
+/* ================================================================ */
 (function(){
+const configured=!/PASTE_/.test(CFG.url+CFG.key);
+const sb=configured&&window.supabase?window.supabase.createClient(CFG.url,CFG.key):null;
 const $=s=>document.querySelector(s);
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const rs=n=>'₹'+Number(n).toLocaleString('en-IN');
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rs=n=>'₹'+Number(n||0).toLocaleString('en-IN');
 const today=new Date();today.setHours(0,0,0,0);
 const addD=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
 const p2=n=>String(n).padStart(2,'0');
 const ymd=d=>d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate());
-const mmdd=d=>p2(d.getMonth()+1)+'-'+p2(d.getDate());
 const WD=['रवि','सोम','मंगल','बुध','गुरु','शुक्र','शनि'];
 const MO=['जन','फ़र','मार्च','अप्रै','मई','जून','जुल','अग','सित','अक्टू','नव','दिस'];
-const T0=ymd(today),T1=ymd(addD(today,1)),T2=ymd(addD(today,2));
+const T0=ymd(today),T1=ymd(addD(today,1));
+const parseD=ds=>{const[y,m,d]=ds.split('-').map(Number);return new Date(y,m-1,d)};
+const daysSince=ds=>ds?Math.round((today-parseD(ds))/864e5):null;
 function daysUntil(md){const[m,d]=md.split('-').map(Number);let t=new Date(today.getFullYear(),m-1,d);if(t<today)t=new Date(today.getFullYear()+1,m-1,d);return Math.round((t-today)/864e5)}
 function bdayLabel(md){const[m,d]=md.split('-').map(Number);return d+' '+MO[m-1]}
-
-const SERVICES=[{id:'cut',n:'कटिंग',p:100,on:true},{id:'beard',n:'दाढ़ी सेट',p:60,on:true},{id:'wash',n:'हेयर वॉश',p:40,on:true}];
-const ADDONS=[{id:'trim',n:'बियर्ड ट्रिम',p:99,on:true},{id:'massage',n:'हेड मसाज',p:199,on:true},{id:'clean',n:'फेस क्लीनअप',p:149,on:true}];
-const ALL=[...SERVICES,...ADDONS];
-const SLOTS=[];for(let h=10;h<20;h++){if(h===14)continue;SLOTS.push(p2(h)+':00',p2(h)+':30')}
 const tm12=t=>{let[h,m]=t.split(':').map(Number);const s=h>=12?'PM':'AM';h=h%12||12;return h+':'+p2(m)+' '+s};
-const bd=n=>mmdd(addD(today,n));
+function fmtDay(ds){const x=parseD(ds);const diff=Math.round((x-today)/864e5);return diff===0?'आज':diff===1?'कल':diff===-1?'बीता कल':WD[x.getDay()]+' '+x.getDate()+' '+MO[x.getMonth()]}
+const base=()=>location.href.split('#')[0].split('?')[0];
+const custLink=slug=>base()+'?shop='+slug;
+function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,2600)}
+async function ask(p){const r=await p;if(r.error){toast('कुछ गड़बड़ हुई: '+r.error.message);throw r.error}return r.data}
 
-const S={
-  mode:'cust',loggedIn:false,tab:'bk',bf:'today',done:null,loginErr:'',q:'',
-  set:{shop:'रॉयल कट्स सलून',
-    remOn:true,remDays:25,bdayOn:true,bdayBefore:5,bdayOff:20,firstOn:true,firstOff:10,refOn:true,refOff:15,
-    tplRem:'नमस्ते {नाम} जी, आपके बाल बड़े हो गए होंगे। आइए, कटवा लीजिए! बुकिंग करें: {लिंक} – {दुकान}',
-    tplBday:'जन्मदिन मुबारक {नाम} जी! इस हफ़्ते हमारी तरफ़ से {छूट}% की छूट। बुकिंग करें: {लिंक} – {दुकान}'},
-  customers:[
-    {name:'सुनील वर्मा',phone:'9800000001',last:0,visits:14,spent:2860,bday:bd(0)},
-    {name:'राहुल शर्मा',phone:'9800000002',last:25,visits:9,spent:1780,bday:'03-14'},
-    {name:'अमित यादव',phone:'9800000003',last:27,visits:22,spent:5240,bday:'07-02'},
-    {name:'विकास गुप्ता',phone:'9800000004',last:31,visits:6,spent:1190,bday:bd(5)},
-    {name:'रोहित सिंह',phone:'9800000005',last:12,visits:17,spent:4110,bday:bd(2)},
-    {name:'मोहित जैन',phone:'9800000006',last:8,visits:11,spent:2430,bday:''},
-    {name:'कुणाल पटेल',phone:'9800000007',last:68,visits:4,spent:620,bday:''},
-    {name:'दीपक मिश्रा',phone:'9800000008',last:19,visits:30,spent:7050,bday:'11-20'},
-    {name:'संजय कुमार',phone:'9800000009',last:44,visits:8,spent:1560,bday:''}
-  ],
-  sent:{},
-  bookings:[
-    {id:1,date:T0,time:'10:30',name:'सुनील वर्मा',phone:'9800000001',svc:['cut','beard'],total:160,st:'done'},
-    {id:2,date:T0,time:'11:30',name:'दीपक मिश्रा',phone:'9800000008',svc:['cut','massage'],total:299,st:'came'},
-    {id:3,date:T0,time:'12:30',name:'अमित यादव',phone:'9800000003',svc:['cut'],total:100,st:'booked'},
-    {id:4,date:T0,time:'16:00',name:'विकास गुप्ता',phone:'9800000004',svc:['cut','trim'],total:199,st:'booked'},
-    {id:5,date:T1,time:'11:00',name:'रोहित सिंह',phone:'9800000005',svc:['cut','beard'],total:160,st:'booked'},
-    {id:6,date:T1,time:'17:30',name:'मोहित जैन',phone:'9800000006',svc:['beard','clean'],total:209,st:'booked'},
-    {id:7,date:T2,time:'12:00',name:'राहुल शर्मा',phone:'9800000002',svc:['cut'],total:100,st:'booked'},
-    {id:8,date:ymd(addD(today,-1)),time:'11:00',name:'रोहित सिंह',phone:'9800000005',svc:['cut'],total:100,st:'done'},
-    {id:9,date:ymd(addD(today,-1)),time:'15:30',name:'संजय कुमार',phone:'9800000009',svc:['cut','beard'],total:160,st:'noshow'},
-    {id:10,date:ymd(addD(today,-2)),time:'18:00',name:'मोहित जैन',phone:'9800000006',svc:['cut','massage'],total:299,st:'done'}
-  ],
-  nextId:11,
-  draft:{svc:[],add:[],date:T0,time:null,name:'',phone:'',bday:'',err:''}
-};
+const DEF={remOn:true,remDays:25,bdayOn:true,bdayBefore:5,bdayOff:20,firstOn:true,firstOff:10,refOn:true,refOff:15,
+  open:10,close:20,lunch:14,
+  tplRem:'नमस्ते {नाम} जी, आपके बाल बड़े हो गए होंगे। आइए, कटवा लीजिए! बुकिंग करें: {लिंक} – {दुकान}',
+  tplBday:'जन्मदिन मुबारक {नाम} जी! इस हफ़्ते हमारी तरफ़ से {छूट}% की छूट। बुकिंग करें: {लिंक} – {दुकान}',
+  loy:{on:true,need:10,reward:'1 कटिंग फ्री'}};
+const DEFSV=[['कटिंग',100,false],['दाढ़ी सेट',60,false],['हेयर वॉश',40,false],['बियर्ड ट्रिम',99,true],['हेड मसाज',199,true],['फेस क्लीनअप',149,true]];
 const ST={booked:'बुक',came:'आया',done:'पूरा हुआ',noshow:'नहीं आया',cancel:'रद्द'};
-const svcText=ids=>ids.map(i=>(ALL.find(a=>a.id===i)||{}).n).filter(Boolean).join(' + ');
-const link=()=>location.href.split('#')[0];
-function fill(t,c,off){return t.replace(/\{नाम\}/g,c.name.split(' ')[0]).replace(/\{दुकान\}/g,S.set.shop).replace(/\{छूट\}/g,off||'').replace(/\{लिंक\}/g,link())}
-function toast(m){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,2200)}
+const slotsOf=st=>{const a=[];for(let h=st.open;h<st.close;h++){if(h===st.lunch)continue;a.push(p2(h)+':00',p2(h)+':30')}return a};
 
-/* ---------- ग्राहक का पेज ---------- */
-function slotsFor(date){
-  const taken=new Set(S.bookings.filter(b=>b.date===date&&b.st!=='cancel').map(b=>b.time));
-  const now=new Date();const nowM=now.getHours()*60+now.getMinutes();
-  return SLOTS.map(t=>{const[h,m]=t.split(':').map(Number);const past=date===T0&&h*60+m<=nowM;return{t,off:taken.has(t)||past}});
+function route(){
+  const h=location.hash,sp=new URLSearchParams(location.search);
+  if(h==='#dukandar'||sp.has('owner'))return{mode:'own'};
+  const slug=sp.get('shop')||(h.startsWith('#s-')?h.slice(3):'');
+  if(slug)return{mode:'cust',slug};
+  return{mode:'home'};
+}
+const S={r:route(),pub:null,pubErr:'',taken:{},stars:null,done:null,
+  draft:{svc:[],date:T0,time:null,name:'',phone:'',bday:'',err:'',busy:false},
+  auth:{mode:'login',err:'',busy:false},user:null,shop:null,services:[],offers:[],customers:[],bookings:[],sent:new Set(),
+  tab:'bk',bf:'today',q:''};
+
+/* ---------- ग्राहक ---------- */
+async function loadPub(){
+  const{data,error}=await sb.rpc('get_shop',{p_slug:S.r.slug});
+  if(error||!data){S.pubErr='यह दुकान नहीं मिली। लिंक या QR दोबारा जाँचो।'}
+  else{S.pub=data;S.pub.settings=Object.assign({},DEF,data.settings||{});await loadTaken(S.draft.date)}
+  render();
+}
+async function loadTaken(d){const{data}=await sb.rpc('get_taken',{p_slug:S.r.slug,p_date:d});S.taken[d]=data||[]}
+const activePct=()=>S.pub.offers.reduce((m,o)=>Math.max(m,o.off),0);
+function loyCard(){
+  const L=S.pub.settings.loy;if(!L||!L.on)return '';
+  const n=S.stars==null?0:Math.min(S.stars,L.need);
+  const st=Array.from({length:L.need},(_,i)=>`<span style="color:${i<n?'var(--accent)':'var(--line)'};font-size:22px">★</span>`).join('');
+  return `<div class="card"><h3>लॉयल्टी कार्ड</h3><div style="display:flex;flex-wrap:wrap;gap:2px;margin-bottom:6px">${st}</div><p class="muted" style="margin:0">हर विज़िट पर 1 स्टार। ${L.need} स्टार पूरे होने पर ${esc(L.reward)}। ${S.stars==null?'अपना नंबर डालो तो अपने स्टार दिखेंगे।':'आपके '+n+' स्टार हैं।'}${n>=L.need?' इनाम तैयार है!':''}</p></div>`;
 }
 function custView(){
-  const d=S.draft;
+  if(S.pubErr)return `<div class="card"><h2>दुकान नहीं मिली</h2><p class="muted" style="margin:0">${esc(S.pubErr)}</p></div>`;
+  if(!S.pub)return '<div class="empty">लोड हो रहा है…</div>';
+  const P=S.pub,st=P.settings,d=S.draft;
   if(S.done){const b=S.done;return `
-    <div class="card okbox">
-      <h2>बुकिंग पक्की हो गई</h2>
-      <p style="margin:0 0 10px">${esc(b.name)} जी, आपका समय ${fmtDay(b.date)} को ${tm12(b.time)} है।</p>
-      <p class="muted" style="margin:0 0 4px">${esc(svcText(b.svc))}</p>
+    <div class="card okbox"><h2>बुकिंग पक्की हो गई</h2>
+      <p style="margin:0 0 10px">${esc(d.name)} जी, आपका समय ${fmtDay(b.date)} को ${tm12(b.time)} है।</p>
+      <p class="muted" style="margin:0 0 4px">${esc(b.names)}</p>
       <div class="row" style="margin:10px 0"><span class="muted">कुल अंदाज़ा</span><span class="total">${rs(b.total)}</span></div>
       <div class="demo" style="margin:0 0 12px">पैसा ऐप में नहीं लगेगा। भुगतान दुकान पर करें।</div>
-      <button class="btn block" data-act="newbook">नई बुकिंग करें</button>
-    </div>
-    <div class="card"><h3>दुकानदार को क्या दिखेगा</h3><p class="muted" style="margin:0">ऊपर "दुकानदार का पेज" खोलकर लॉगिन करो। यह बुकिंग "आज की बुकिंग" या "कल" में समय के साथ दिखेगी।</p></div>`}
-  const sv=d.svc.concat(d.add);
-  let total=sv.reduce((a,i)=>a+ALL.find(x=>x.id===i).p,0);
-  const isNew=d.phone.length>=10&&!S.customers.some(c=>c.phone===d.phone);
+      <button class="btn block" data-act="newbook">नई बुकिंग करें</button></div>`}
+  const main=P.services.filter(s=>!s.is_addon),adds=P.services.filter(s=>s.is_addon);
+  const sum=d.svc.reduce((a,id)=>a+((P.services.find(x=>x.id===id)||{}).price||0),0);
+  const pct=activePct(),disc=Math.round(sum*pct/100);
   const days=[0,1,2,3,4,5].map(n=>addD(today,n));
-  return `
+  const taken=new Set(S.taken[d.date]||[]);const now=new Date();const nowM=now.getHours()*60+now.getMinutes();
+  const opt=(s,up)=>`<label class="opt"><input type="checkbox" data-act="pick" data-v="${s.id}" ${d.svc.includes(s.id)?'checked':''}><span class="n">${esc(s.name)}${up?'<span class="tag">'+s.price+' में जोड़ें</span>':''}</span><span class="price">${rs(s.price)}</span></label>`;
+  const banner=P.offers.map(o=>`<div class="card" style="border-color:var(--accent)"><div class="row"><b>${esc(o.name)}</b><span class="tag" style="margin:0">${o.off}% छूट</span></div><div class="muted">${fmtDay(o.end)} तक। कुल रकम में अपने आप घट जाएगी।</div></div>`).join('');
+  return `${banner}
+  <div class="card"><h2>सर्विस चुनो</h2>${main.map(s=>opt(s,false)).join('')||'<div class="muted">दुकानदार ने अभी सर्विस नहीं जोड़ी।</div>'}</div>
+  ${adds.length?`<div class="card"><h2>साथ में जोड़ें</h2>${adds.map(s=>opt(s,true)).join('')}</div>`:''}
+  <div class="card"><h2>तारीख और समय</h2>
+    <div class="chips" style="margin-bottom:12px">${days.map(x=>`<button class="chip day" data-act="date" data-v="${ymd(x)}" aria-pressed="${d.date===ymd(x)}"><span>${x.getTime()===today.getTime()?'आज':WD[x.getDay()]}</span><span>${x.getDate()} ${MO[x.getMonth()]}</span></button>`).join('')}</div>
+    <div class="chips">${slotsOf(st).map(t=>{const[h,m]=t.split(':').map(Number);const off=taken.has(t)||(d.date===T0&&h*60+m<=nowM);return `<button class="chip" data-act="time" data-v="${t}" ${off?'disabled':''} aria-pressed="${d.time===t}">${tm12(t)}</button>`}).join('')}</div>
+    <p class="muted small" style="margin:10px 0 0">${st.lunch?tm12(p2(st.lunch)+':00')+' से '+tm12(p2(st.lunch+1)+':00')+' तक दुकान बंद रहती है। ':''}कटे हुए समय पहले से बुक हैं।</p></div>
+  <div class="card"><h2>आपकी जानकारी</h2>
+    <label class="f" for="c-name">नाम</label><input type="text" id="c-name" autocomplete="name" value="${esc(d.name)}" placeholder="जैसे: अजय कुमार">
+    <label class="f" for="c-phone">मोबाइल नंबर</label><input type="tel" id="c-phone" inputmode="numeric" maxlength="10" autocomplete="tel" value="${esc(d.phone)}" placeholder="10 अंकों का नंबर">
+    <label class="f" for="c-bday">जन्मतिथि (वैकल्पिक)</label><input type="date" id="c-bday" value="${esc(d.bday)}">
+    <p class="muted small" style="margin:6px 0 0">जन्मदिन पर सरप्राइज़ ऑफ़र पाने के लिए। साल बताना ज़रूरी नहीं। आपका नंबर सिर्फ़ इस दुकान के पास रहेगा।</p></div>
   <div class="card">
-    <h2>सर्विस चुनो</h2>
-    ${SERVICES.filter(s=>s.on).map(s=>opt(s,'svc',d.svc)).join('')}
-  </div>
-  <div class="card">
-    <h2>साथ में जोड़ें</h2>
-    ${ADDONS.filter(s=>s.on).map(s=>opt(s,'add',d.add,true)).join('')}
-  </div>
-  <div class="card">
-    <h2>तारीख और समय</h2>
-    <div class="chips" style="margin-bottom:12px">
-      ${days.map(x=>`<button class="chip day" data-act="date" data-v="${ymd(x)}" aria-pressed="${d.date===ymd(x)}"><span>${x.getTime()===today.getTime()?'आज':WD[x.getDay()]}</span><span>${x.getDate()} ${MO[x.getMonth()]}</span></button>`).join('')}
-    </div>
-    <div class="chips">
-      ${slotsFor(d.date).map(s=>`<button class="chip" data-act="time" data-v="${s.t}" ${s.off?'disabled':''} aria-pressed="${d.time===s.t}">${tm12(s.t)}</button>`).join('')}
-    </div>
-    <p class="muted small" style="margin:10px 0 0">2:00 से 3:00 बजे तक दुकान बंद रहती है। कटे हुए समय पहले से बुक हैं।</p>
-  </div>
-  <div class="card">
-    <h2>आपकी जानकारी</h2>
-    <label class="f" for="c-name">नाम</label>
-    <input type="text" id="c-name" autocomplete="name" value="${esc(d.name)}" placeholder="जैसे: अजय कुमार">
-    <label class="f" for="c-phone">मोबाइल नंबर</label>
-    <input type="tel" id="c-phone" inputmode="numeric" maxlength="10" autocomplete="tel" value="${esc(d.phone)}" placeholder="10 अंकों का नंबर">
-    <label class="f" for="c-bday">जन्मतिथि (वैकल्पिक)</label>
-    <input type="date" id="c-bday" value="${esc(d.bday)}" style="width:100%;font:16px var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 12px">
-    <p class="muted small" style="margin:6px 0 0">जन्मदिन पर सरप्राइज़ ऑफ़र पाने के लिए। साल बताना ज़रूरी नहीं।</p>
-  </div>
-  <div class="card">
-    <div class="row"><span>कुल अंदाज़ा</span><span class="total">${rs(total)}</span></div>
-    ${S.set.firstOn&&isNew?`<p class="muted small" style="margin:8px 0 0">पहली बुकिंग पर ${S.set.firstOff}% छूट। यह दुकान पर बिल में कटेगी।</p>`:''}
+    ${disc?`<div class="row muted" style="margin-bottom:4px"><span>ऑफ़र छूट</span><span>− ${rs(disc)}</span></div>`:''}
+    <div class="row"><span>कुल अंदाज़ा</span><span class="total">${rs(sum-disc)}</span></div>
+    ${st.firstOn?`<p class="muted small" style="margin:8px 0 0">पहली बार आने पर ${st.firstOff}% छूट। यह दुकान पर बिल में कटेगी।</p>`:''}
     ${d.err?`<div class="err" role="alert">${esc(d.err)}</div>`:''}
-    <button class="btn block" style="margin-top:12px" data-act="book">बुकिंग पक्की करें</button>
-    <p class="muted small" style="margin:10px 0 0;text-align:center">भुगतान दुकान पर होगा। ऐप में कोई पैसा नहीं लगता।</p>
-  </div>
-  ${S.set.refOn?`<div class="card"><h3>दोस्त को भेजो</h3><p class="muted" style="margin:0">दोस्त के पहली बार आने पर आप दोनों को ${S.set.refOff}% छूट मिलेगी।</p></div>`:''}`;
+    <button class="btn block" style="margin-top:12px" data-act="book" ${d.busy?'disabled':''}>${d.busy?'बुकिंग हो रही है…':'बुकिंग पक्की करें'}</button>
+    <p class="muted small" style="margin:10px 0 0;text-align:center">भुगतान दुकान पर होगा। ऐप में कोई पैसा नहीं लगता।</p></div>
+  ${loyCard()}
+  ${st.refOn?`<div class="card"><h3>दोस्त को भेजो</h3><p class="muted" style="margin:0">दोस्त के पहली बार आने पर आप दोनों को ${st.refOff}% छूट मिलेगी।</p></div>`:''}`;
 }
-function opt(s,g,sel,up){return `<label class="opt"><input type="checkbox" data-act="pick" data-g="${g}" data-v="${s.id}" ${sel.includes(s.id)?'checked':''}><span class="n">${s.n}${up?'<span class="tag">'+s.p+' में जोड़ें</span>':''}</span><span class="price">${rs(s.p)}</span></label>`}
-function fmtDay(ds){const[y,m,d]=ds.split('-').map(Number);const x=new Date(y,m-1,d);const diff=Math.round((x-today)/864e5);return diff===0?'आज':diff===1?'कल':diff===-1?'कल (बीता)':WD[x.getDay()]+' '+d+' '+MO[m-1]}
 
-/* ---------- दुकानदार का पेज ---------- */
+/* ---------- दुकानदार: लॉगिन ---------- */
+const mailOf=m=>'91'+m+'@salonbook.app';
+async function loadOwner(){
+  const sh=await sb.from('shops').select('*').eq('owner',S.user.id).maybeSingle();
+  S.shop=sh.data;if(!S.shop)return;
+  S.shop.settings=Object.assign({},DEF,S.shop.settings||{});
+  const id=S.shop.id;
+  const[sv,of,cu,bk,sl]=await Promise.all([
+    sb.from('services').select('*').eq('shop_id',id).order('is_addon').order('sort'),
+    sb.from('offers').select('*').eq('shop_id',id).order('end_date',{ascending:false}),
+    sb.from('customers').select('*').eq('shop_id',id),
+    sb.from('bookings').select('*').eq('shop_id',id).gte('date',ymd(addD(today,-120))).order('date'),
+    sb.from('sent_log').select('key').eq('shop_id',id)]);
+  S.services=sv.data||[];S.offers=of.data||[];S.customers=cu.data||[];S.bookings=bk.data||[];
+  S.sent=new Set((sl.data||[]).map(x=>x.key));
+}
+function authView(){
+  const a=S.auth,su=a.mode==='signup';
+  return `<div class="card"><h2>${su?'नई दुकान जोड़ो':'दुकानदार लॉगिन'}</h2>
+    ${su?`<label class="f" for="a-shop" style="margin-top:0">दुकान का नाम</label><input type="text" id="a-shop" placeholder="जैसे: रॉयल कट्स सलून">`:''}
+    <label class="f" for="a-mob" ${su?'':'style="margin-top:0"'}>मोबाइल नंबर</label><input type="tel" id="a-mob" inputmode="numeric" maxlength="10" placeholder="10 अंकों का नंबर" autocomplete="username">
+    <label class="f" for="a-pass">${su?'अपना पासवर्ड बनाओ (कम से कम 6 अक्षर)':'पासवर्ड'}</label><input type="password" id="a-pass" autocomplete="${su?'new-password':'current-password'}" placeholder="पासवर्ड">
+    ${a.err?`<div class="err" role="alert">${esc(a.err)}</div>`:''}
+    <button class="btn block" style="margin-top:14px" data-act="${su?'signup':'login'}" ${a.busy?'disabled':''}>${a.busy?'रुको…':su?'दुकान बनाओ':'लॉगिन'}</button>
+    <p class="muted small" style="margin:12px 0 0;text-align:center"><a href="#" data-act="authmode" data-v="${su?'login':'signup'}" style="color:var(--blue)">${su?'पहले से दुकान है? लॉगिन करो':'नई दुकान जोड़नी है? यहाँ दबाओ'}</a></p></div>`;
+}
+const mkSlug=n=>{const b=n.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,18)||'dukan';return b+'-'+Math.random().toString(36).slice(2,6)};
+
+/* ---------- दुकानदार: स्क्रीन ---------- */
+function dueList(){
+  const out=[],s=S.shop.settings;
+  S.customers.forEach(c=>{
+    if(s.remOn&&c.last_visit){const dd=daysSince(c.last_visit);if(dd>=s.remDays)out.push({key:'r'+c.phone+':'+c.last_visit,kind:'rem',c,txt:'आख़िरी विज़िट '+dd+' दिन पहले'})}
+    if(s.bdayOn&&c.bday){const u=daysUntil(c.bday);if(u<=s.bdayBefore)out.push({key:'b'+c.phone+':'+today.getFullYear(),kind:'bday',c,txt:'जन्मदिन '+(u===0?'आज है':u+' दिन बाद')+' ('+bdayLabel(c.bday)+')'})}
+  });
+  return out;
+}
+const fill=(t,c,off)=>t.replace(/\{नाम\}/g,c.name.split(' ')[0]).replace(/\{दुकान\}/g,S.shop.name).replace(/\{छूट\}/g,off||'').replace(/\{लिंक\}/g,custLink(S.shop.slug));
+const wa=(phone,txt)=>'https://wa.me/91'+esc(phone)+(txt?'?text='+encodeURIComponent(txt):'');
 function ownView(){
-  if(!S.loggedIn)return `
-  <div class="card">
-    <h2>दुकानदार लॉगिन</h2>
-    <label class="f" for="l-name">दुकान का नाम</label>
-    <input type="text" id="l-name" value="रॉयल कट्स सलून" autocomplete="username">
-    <label class="f" for="l-pass">पासवर्ड</label>
-    <input type="password" id="l-pass" autocomplete="current-password" placeholder="पासवर्ड डालो">
-    ${S.loginErr?`<div class="err" role="alert">${S.loginErr}</div>`:''}
-    <button class="btn block" style="margin-top:14px" data-act="login">लॉगिन</button>
-    <p class="muted small" style="margin:10px 0 0">डेमो के लिए पासवर्ड: 1234</p>
-  </div>`;
-  const due=dueList();const left=due.filter(x=>!S.sent[x.key]).length;
-  const tabs=[['bk','बुकिंग'],['msg','आज के मैसेज'],['cu','ग्राहक'],['db','कमाई'],['st','सेटिंग']];
-  return `
-  <div class="tabs" role="group" aria-label="दुकानदार मेनू">
-    ${tabs.map(([k,n])=>`<button data-act="tab" data-v="${k}" aria-pressed="${S.tab===k}">${n}${k==='msg'&&left?'<span class="badge">'+left+'</span>':''}</button>`).join('')}
-  </div>`+({bk:bkView,msg:msgView,cu:cuView,db:dbView,st:stView}[S.tab])(due);
+  if(!S.user)return authView();
+  if(!S.shop)return '<div class="empty">इस नंबर से कोई दुकान नहीं जुड़ी है। लॉग-आउट करके नई दुकान जोड़ो।</div><button class="btn block ghost" data-act="logout">लॉग-आउट</button>';
+  const due=dueList(),left=due.filter(x=>!S.sent.has(x.key)).length;
+  const tabs=[['bk','बुकिंग'],['msg','आज के मैसेज'],['cu','ग्राहक'],['db','कमाई'],['of','ऑफ़र'],['st','सेटिंग']];
+  return `<div class="tabs" role="group" aria-label="मेनू">${tabs.map(([k,n])=>`<button data-act="tab" data-v="${k}" aria-pressed="${S.tab===k}">${n}${k==='msg'&&left?'<span class="badge">'+left+'</span>':''}</button>`).join('')}</div>`+
+    ({bk:bkView,msg:msgView,cu:cuView,db:dbView,of:ofView,st:stView}[S.tab])(due);
 }
 function bkView(){
   const f=S.bf;
-  let list=S.bookings.filter(b=>f==='today'?b.date===T0:f==='tom'?b.date===T1:f==='later'?b.date>T1:b.date<T0);
-  list.sort((a,b)=>(f==='past'?b.date.localeCompare(a.date):a.date.localeCompare(b.date))||a.time.localeCompare(b.time));
+  const list=S.bookings.filter(b=>f==='today'?b.date===T0:f==='tom'?b.date===T1:f==='later'?b.date>T1:b.date<T0)
+    .sort((a,b)=>(f==='past'?b.date.localeCompare(a.date):a.date.localeCompare(b.date))||a.time.localeCompare(b.time));
   const fl=[['today','आज'],['tom','कल'],['later','आगे'],['past','पुरानी']];
   return `<div class="chips" style="margin-bottom:12px">${fl.map(([k,n])=>`<button class="chip" data-act="bf" data-v="${k}" aria-pressed="${f===k}">${n}</button>`).join('')}</div>`+
-  (list.length?list.map(b=>`
-  <div class="card bk">
-    <div class="t">${tm12(b.time).split(' ')[0]}<small>${tm12(b.time).split(' ')[1]}${f==='later'||f==='past'?' · '+fmtDay(b.date):''}</small></div>
-    <div>
-      <div class="row"><b>${esc(b.name)}</b><span class="pill ${b.st}">${ST[b.st]}</span></div>
-      <div class="muted">${esc(b.phone)}</div>
-      <div class="muted">${esc(svcText(b.svc))} · ${rs(b.total)}</div>
-      <div class="acts">
-        ${b.st==='booked'?`<button class="btn sm ok" data-act="st" data-id="${b.id}" data-v="came">आया</button><button class="btn sm ghost" data-act="st" data-id="${b.id}" data-v="noshow">नहीं आया</button><button class="btn sm ghost" data-act="st" data-id="${b.id}" data-v="cancel">रद्द</button>`:''}
-        ${b.st==='came'?`<button class="btn sm ok" data-act="st" data-id="${b.id}" data-v="done">पूरा हुआ</button>`:''}
-        <a class="btn sm ghost" href="https://wa.me/91${esc(b.phone)}" target="_blank" rel="noopener">WhatsApp</a>
-      </div>
-    </div>
-  </div>`).join(''):`<div class="empty">इस दिन कोई बुकिंग नहीं है।</div>`);
-}
-function dueList(){
-  const out=[];const s=S.set;
-  if(s.remOn)S.customers.forEach(c=>{if(c.last!==null&&c.last>=s.remDays)out.push({key:'r'+c.phone,kind:'rem',c,txt:'आख़िरी विज़िट '+c.last+' दिन पहले'})});
-  if(s.bdayOn)S.customers.forEach(c=>{if(!c.bday)return;const u=daysUntil(c.bday);if(u<=s.bdayBefore)out.push({key:'b'+c.phone,kind:'bday',c,txt:'जन्मदिन '+(u===0?'आज है':u+' दिन बाद')+' ('+bdayLabel(c.bday)+')'})});
-  return out;
+  (list.length?list.map(b=>`<div class="card bk"><div class="t">${tm12(b.time).split(' ')[0]}<small>${tm12(b.time).split(' ')[1]}${f==='later'||f==='past'?' · '+fmtDay(b.date):''}</small></div>
+    <div><div class="row"><b>${esc(b.customer_name)}</b><span class="pill ${b.status}">${ST[b.status]}</span></div>
+    <div class="muted">${esc(b.customer_phone)}</div><div class="muted">${esc(b.svc_names)} · ${rs(b.total)}</div>
+    <div class="acts">${b.status==='booked'?`<button class="btn sm ok" data-act="st" data-id="${b.id}" data-v="came">आया</button><button class="btn sm ghost" data-act="st" data-id="${b.id}" data-v="noshow">नहीं आया</button><button class="btn sm ghost" data-act="st" data-id="${b.id}" data-v="cancel">रद्द</button>`:''}
+    ${b.status==='came'?`<button class="btn sm ok" data-act="st" data-id="${b.id}" data-v="done">पूरा हुआ</button>`:''}
+    <a class="btn sm ghost" href="${wa(b.customer_phone)}" target="_blank" rel="noopener">WhatsApp</a></div></div></div>`).join(''):'<div class="empty">इस दिन कोई बुकिंग नहीं है।</div>');
 }
 function msgView(due){
-  const left=due.filter(x=>!S.sent[x.key]).length;
-  const rem=due.filter(x=>x.kind==='rem'),bday=due.filter(x=>x.kind==='bday');
+  const left=due.filter(x=>!S.sent.has(x.key)).length,s=S.shop.settings;
   const sec=(t,l)=>`<h3 style="margin-top:6px">${t} (${l.length})</h3>`+(l.length?l.map(x=>{
-    const txt=fill(x.kind==='rem'?S.set.tplRem:S.set.tplBday,x.c,S.set.bdayOff);
-    const sent=S.sent[x.key];
-    return `<div class="card ${sent?'sent':''}"><div class="row"><div><b>${esc(x.c.name)}</b><div class="muted">${x.txt}</div></div>
-    ${sent?'<span class="pill done">✔ भेजा गया</span>':`<a class="btn sm ok" data-act="send" data-k="${x.key}" href="https://wa.me/91${esc(x.c.phone)}?text=${encodeURIComponent(txt)}" target="_blank" rel="noopener">WhatsApp भेजो</a>`}</div></div>`}).join(''):'<div class="empty">आज इसमें कोई नहीं है।</div>');
-  return `<div class="card"><div class="total">${left}</div><div class="muted">मैसेज आज भेजने बाक़ी हैं</div></div>`+sec('रिमाइंडर: बाल कटवाने का समय',rem)+sec('जन्मदिन',bday)+
-  `<p class="muted small">बटन दबाने पर WhatsApp खुलेगा और मैसेज लिखा मिलेगा। आपको बस Send दबाना है।</p>`;
+    const txt=fill(x.kind==='rem'?s.tplRem:s.tplBday,x.c,s.bdayOff),sent=S.sent.has(x.key);
+    return `<div class="card ${sent?'sent':''}"><div class="row"><div><b>${esc(x.c.name)}</b><div class="muted">${x.txt}</div></div>${sent?'<span class="pill done">✔ भेजा गया</span>':`<a class="btn sm ok" data-act="send" data-k="${esc(x.key)}" href="${wa(x.c.phone,txt)}" target="_blank" rel="noopener">WhatsApp भेजो</a>`}</div></div>`}).join(''):'<div class="empty">आज इसमें कोई नहीं है।</div>');
+  return `<div class="card"><div class="total">${left}</div><div class="muted">मैसेज आज भेजने बाक़ी हैं</div></div>`+sec('रिमाइंडर: बाल कटवाने का समय',due.filter(x=>x.kind==='rem'))+sec('जन्मदिन',due.filter(x=>x.kind==='bday'))+
+  '<p class="muted small">बटन दबाने पर WhatsApp खुलेगा और मैसेज लिखा मिलेगा। आपको बस Send दबाना है।</p>';
 }
 function cuView(){
-  const q=S.q.trim().toLowerCase();
-  const l=S.customers.filter(c=>!q||c.name.toLowerCase().includes(q)||c.phone.includes(q)).sort((a,b)=>(a.last??999)-(b.last??999));
-  return `<label class="f" for="q" style="margin-top:0">ग्राहक खोजो</label><input type="search" id="q" value="${esc(S.q)}" placeholder="नाम या नंबर" style="margin-bottom:12px">`+
-  (l.length?l.map(c=>`<div class="card"><div class="row"><b>${esc(c.name)}</b>${c.last!==null&&c.last>=60?'<span class="pill noshow">60+ दिन से नहीं आए</span>':''}</div>
-  <div class="muted">${esc(c.phone)}</div>
-  <div class="muted">${c.visits} विज़िट · आख़िरी: ${c.last===null?'अभी तक नहीं':c.last===0?'आज':c.last+' दिन पहले'}${c.bday?' · जन्मदिन '+bdayLabel(c.bday):''}</div></div>`).join(''):'<div class="empty">कोई ग्राहक नहीं मिला।</div>');
+  const q=S.q.trim().toLowerCase(),L=S.shop.settings.loy;
+  const l=S.customers.filter(c=>!q||c.name.toLowerCase().includes(q)||c.phone.includes(q)).sort((a,b)=>(daysSince(a.last_visit)??999)-(daysSince(b.last_visit)??999));
+  const ds=c=>c.last_visit?daysSince(c.last_visit):null;
+  return `<div class="card"><h3>नया ग्राहक जोड़ो (जो सीधे दुकान पर आया)</h3>
+    <input type="text" id="cu-name" placeholder="नाम" aria-label="नाम"><div style="height:8px"></div>
+    <input type="tel" id="cu-phone" inputmode="numeric" maxlength="10" placeholder="मोबाइल नंबर" aria-label="मोबाइल नंबर"><div style="height:8px"></div>
+    <label class="f" for="cu-bday" style="margin-top:0">जन्मतिथि (वैकल्पिक)</label><input type="date" id="cu-bday">
+    <button class="btn block" style="margin-top:12px" data-act="cuadd">जोड़ो</button></div>
+  <label class="f" for="q" style="margin-top:0">ग्राहक खोजो (${S.customers.length})</label><input type="search" id="q" value="${esc(S.q)}" placeholder="नाम या नंबर" style="margin-bottom:12px">`+
+  (l.length?l.map(c=>{const d=ds(c),ready=L.on&&c.stars>=L.need;return `<div class="card"><div class="row"><b>${esc(c.name)}</b>${d!==null&&d>=60?'<span class="pill noshow">60+ दिन से नहीं आए</span>':''}</div>
+    <div class="muted">${esc(c.phone)}</div>
+    <div class="muted">${c.visits} विज़िट · आख़िरी: ${d===null?'अभी तक नहीं':d===0?'आज':d+' दिन पहले'}${c.bday?' · जन्मदिन '+bdayLabel(c.bday):''}</div>
+    ${L.on?`<div class="muted" style="margin-top:4px">★ ${c.stars}/${L.need}${ready?' · इनाम तैयार':''}</div>`:''}
+    <div class="acts">${ready?`<button class="btn sm ok" data-act="reward" data-id="${c.id}">इनाम दे दिया</button>`:''}<a class="btn sm ghost" href="${wa(c.phone)}" target="_blank" rel="noopener">WhatsApp</a></div></div>`}).join(''):'<div class="empty">कोई ग्राहक नहीं मिला।</div>');
 }
 function dbView(){
-  const t=S.bookings.filter(b=>b.date===T0);
-  const earn=t.filter(b=>b.st==='done').reduce((a,b)=>a+b.total,0);
-  const pend=t.filter(b=>b.st==='booked'||b.st==='came');
+  const t=S.bookings.filter(b=>b.date===T0),done=t.filter(b=>b.status==='done');
+  const earn=done.reduce((a,b)=>a+b.total,0),pend=t.filter(b=>b.status==='booked'||b.status==='came').length;
   const top=[...S.customers].sort((a,b)=>b.spent-a.spent).slice(0,20);
-  const away=S.customers.filter(c=>c.last!==null&&c.last>=60).length;
-  return `<div class="stats">
-    <div class="stat"><b>${rs(earn)}</b><span>आज की कमाई</span></div>
-    <div class="stat"><b>${t.filter(b=>b.st==='done').length}</b><span>आज पूरे हुए</span></div>
-    <div class="stat"><b>${pend.length}</b><span>अभी बाक़ी बुकिंग</span></div>
-    <div class="stat"><b>${away}</b><span>60 दिन से नहीं आए</span></div></div>
-  <div class="card"><h2>सबसे ज़्यादा पैसा देने वाले ग्राहक</h2>
-    ${top.map((c,i)=>`<div class="rank"><i>${i+1}</i><div><b>${esc(c.name)}</b><div class="muted small">${c.visits} विज़िट</div></div><span class="price">${rs(c.spent)}</span></div>`).join('')}</div>
+  const away=S.customers.filter(c=>c.last_visit&&daysSince(c.last_visit)>=60).length;
+  return `<div class="stats"><div class="stat"><b>${rs(earn)}</b><span>आज की कमाई</span></div><div class="stat"><b>${done.length}</b><span>आज पूरे हुए</span></div>
+    <div class="stat"><b>${pend}</b><span>अभी बाक़ी बुकिंग</span></div><div class="stat"><b>${away}</b><span>60 दिन से नहीं आए</span></div></div>
+  <div class="card"><h2>सबसे ज़्यादा पैसा देने वाले ग्राहक</h2>${top.length?top.map((c,i)=>`<div class="rank"><i>${i+1}</i><div><b>${esc(c.name)}</b><div class="muted small">${c.visits} विज़िट</div></div><span class="price">${rs(c.spent)}</span></div>`).join(''):'<div class="muted">अभी कोई ग्राहक नहीं है।</div>'}</div>
   <p class="muted small">कमाई का आँकड़ा तब बनता है जब आप बुकिंग पर "पूरा हुआ" दबाते हो।</p>`;
 }
+const offActive=o=>o.active&&o.end_date>=T0;
+function ofView(){
+  const L=S.shop.settings.loy,s=S.shop.settings;
+  const top=S.offers.filter(offActive).sort((a,b)=>b.off_pct-a.off_pct)[0];
+  const list=S.offers.length?S.offers.map(o=>`<div class="card"><div class="row"><div><b>${esc(o.name)}</b><div class="muted">${o.off_pct}% छूट · ${fmtDay(o.end_date)} तक${o.end_date<T0?' · ख़त्म':''}</div></div><div class="acts" style="margin:0"><button class="btn sm ${o.active?'ok':'ghost'}" data-act="offtog" data-id="${o.id}">${o.active?'चालू':'बंद'}</button><button class="btn sm ghost" data-act="offdel" data-id="${o.id}">हटाओ</button></div></div></div>`).join(''):'<div class="empty">अभी कोई ऑफ़र नहीं है।</div>';
+  const people=top?[...S.customers].sort((a,b)=>(daysSince(b.last_visit)??-1)-(daysSince(a.last_visit)??-1)).map(c=>{
+    const key='o'+top.id+':'+c.phone,txt='नमस्ते '+c.name.split(' ')[0]+' जी! '+top.name+': '+top.off_pct+'% छूट, '+fmtDay(top.end_date)+' तक। बुकिंग करें: '+custLink(S.shop.slug)+' – '+S.shop.name;
+    const d=daysSince(c.last_visit);
+    return `<div class="card ${S.sent.has(key)?'sent':''}"><div class="row"><div><b>${esc(c.name)}</b><div class="muted">${d===null?'अभी तक नहीं आए':d+' दिन पहले आए'}</div></div>${S.sent.has(key)?'<span class="pill done">✔ भेजा गया</span>':`<a class="btn sm ok" data-act="send" data-k="${esc(key)}" href="${wa(c.phone,txt)}" target="_blank" rel="noopener">WhatsApp भेजो</a>`}</div></div>`}).join(''):'';
+  return `<div class="card"><h2>नया ऑफ़र</h2>
+    <label class="f" for="of-name" style="margin-top:0">ऑफ़र का नाम</label><input type="text" id="of-name" placeholder="जैसे: दिवाली ऑफ़र">
+    <div class="row" style="gap:10px;align-items:flex-end"><div style="flex:1"><label class="f" for="of-off">छूट (%)</label><input type="number" id="of-off" min="1" max="100" value="10"></div>
+    <div style="flex:2"><label class="f" for="of-end">आख़िरी तारीख</label><input type="date" id="of-end" value="${ymd(addD(today,7))}"></div></div>
+    <button class="btn block" style="margin-top:12px" data-act="offadd">ऑफ़र बनाओ</button>
+    <p class="muted small" style="margin:8px 0 0">चालू ऑफ़र ग्राहक के बुकिंग पेज पर सबसे ऊपर दिखता है और कुल रकम में अपने आप घट जाता है।</p></div>
+  <h3>आपके ऑफ़र</h3>${list}
+  ${top?`<h3 style="margin-top:6px">ग्राहकों को "${esc(top.name)}" भेजो (${S.customers.length})</h3>${people}<p class="muted small">हफ़्ते में 1-2 से ज़्यादा ऑफ़र मैसेज मत भेजो।</p>`:''}
+  <div class="card"><h2>लॉयल्टी स्टार</h2>
+    <label class="row" style="margin-bottom:4px"><span>हर "पूरा हुआ" विज़िट पर 1 स्टार</span><input type="checkbox" id="lo-on" ${L.on?'checked':''} style="width:20px;height:20px;accent-color:var(--blue)"></label>
+    <label class="f" for="lo-need">कितने स्टार पर इनाम</label><input type="number" id="lo-need" min="2" max="30" value="${L.need}">
+    <label class="f" for="lo-reward">इनाम</label><input type="text" id="lo-reward" value="${esc(L.reward)}">
+    <button class="btn block" style="margin-top:12px" data-act="loysave">सेव करो</button></div>`;
+}
 function stView(){
-  const s=S.set;
+  const s=S.shop.settings;
   const r=(id,on,l,val,unit)=>`<div class="set"><label class="l"><input type="checkbox" id="${id}-on" ${s[on]?'checked':''}><span>${l}</span></label><div class="row" style="gap:4px"><input type="number" id="${id}" min="0" max="365" value="${val}" aria-label="${l}"><span class="muted small">${unit}</span></div></div>`;
-  const pr=x=>`<div class="set"><label class="l"><input type="checkbox" id="on-${x.id}" ${x.on?'checked':''}><span>${x.n}</span></label><div class="row" style="gap:4px"><span class="muted small">₹</span><input type="number" id="pr-${x.id}" min="0" max="9999" value="${x.p}" aria-label="${x.n} का रेट"></div></div>`;
-  return `<div class="card"><h2>सर्विस के रेट</h2><p class="muted small" style="margin:0 0 4px">रेट बदलोगे तो ग्राहक को नया रेट दिखेगा। टिक हटाने पर वह सर्विस ग्राहक को नहीं दिखेगी। पुरानी बुकिंग का हिसाब नहीं बदलता।</p>
-    <h3 style="margin-top:10px">मुख्य सर्विस</h3>${SERVICES.map(pr).join('')}
-    <h3 style="margin-top:14px">साथ में जोड़ने वाली (ऐड-ऑन)</h3>${ADDONS.map(pr).join('')}
-  </div>
+  const sv=x=>`<div class="sv"><input type="checkbox" id="sa-${x.id}" ${x.active?'checked':''} aria-label="ग्राहक को दिखाओ"><input type="text" id="sn-${x.id}" value="${esc(x.name)}" aria-label="नाम"><input type="number" id="sp-${x.id}" min="0" max="9999" value="${x.price}" aria-label="रेट"></div>`;
+  const cl=custLink(S.shop.slug);
+  return `<div class="card"><h2>आपकी दुकान का लिंक</h2>
+    <p class="muted small" style="margin:0">ग्राहकों के लिए (इसी का QR बनवाकर दुकान पर लगाओ):</p><div class="linkbox">${esc(cl)}</div>
+    <button class="btn sm" data-act="copy" data-v="${esc(cl)}">लिंक कॉपी करो</button>
+    <p class="muted small" style="margin:10px 0 0">अगर ऊपर वाला लिंक ग्राहक के फोन में दुकान न खोले तो यह लिंक दो:</p><div class="linkbox">${esc(base()+'#s-'+S.shop.slug)}</div>
+    <button class="btn sm ghost" data-act="copy" data-v="${esc(base()+'#s-'+S.shop.slug)}">यह लिंक कॉपी करो</button></div>
+  <div class="card"><h2>सर्विस के रेट</h2><p class="muted small" style="margin:0 0 4px">रेट बदलकर सेव करोगे तो ग्राहक को नया रेट दिखेगा। टिक हटाने पर सर्विस ग्राहक को नहीं दिखेगी। पुरानी बुकिंग का हिसाब नहीं बदलता।</p>
+    <h3 style="margin-top:10px">मुख्य सर्विस</h3>${S.services.filter(x=>!x.is_addon).map(sv).join('')||'<div class="muted small">कोई नहीं।</div>'}
+    <h3 style="margin-top:14px">साथ में जोड़ने वाली (ऐड-ऑन)</h3>${S.services.filter(x=>x.is_addon).map(sv).join('')||'<div class="muted small">कोई नहीं।</div>'}
+    <h3 style="margin-top:14px">नई सर्विस जोड़ो</h3>
+    <div class="sv" style="border-top:0;grid-template-columns:1fr 84px"><input type="text" id="ns-name" placeholder="जैसे: हेयर कलर" aria-label="नई सर्विस का नाम"><input type="number" id="ns-price" min="0" max="9999" placeholder="₹" aria-label="रेट"></div>
+    <label class="row" style="margin:6px 0 8px"><span class="muted">यह "साथ में जोड़ें" वाली सर्विस है</span><input type="checkbox" id="ns-add" style="width:20px;height:20px;accent-color:var(--blue)"></label>
+    <button class="btn sm ghost" data-act="svadd">सर्विस जोड़ो</button></div>
+  <div class="card"><h2>खुलने का समय</h2>
+    <div class="set"><span>दुकान खुलती है (घंटा, 24 घंटे में)</span><input type="number" id="open" min="0" max="23" value="${s.open}"></div>
+    <div class="set"><span>दुकान बंद होती है</span><input type="number" id="close" min="1" max="24" value="${s.close}"></div>
+    <div class="set"><span>खाने का घंटा (बंद रहता है, 0 = कोई नहीं)</span><input type="number" id="lunch" min="0" max="23" value="${s.lunch}"></div></div>
   <div class="card"><h2>ऑफ़र और दिन</h2>
-    ${r('remDays','remOn','रिमाइंडर: कितने दिन बाद',s.remDays,'दिन')}
-    ${r('bdayBefore','bdayOn','जन्मदिन मैसेज: कितने दिन पहले',s.bdayBefore,'दिन')}
+    ${r('remDays','remOn','रिमाइंडर: कितने दिन बाद',s.remDays,'दिन')}${r('bdayBefore','bdayOn','जन्मदिन मैसेज: कितने दिन पहले',s.bdayBefore,'दिन')}
     <div class="set"><span class="muted">जन्मदिन की छूट</span><div class="row" style="gap:4px"><input type="number" id="bdayOff" min="0" max="100" value="${s.bdayOff}" aria-label="जन्मदिन की छूट"><span class="muted small">%</span></div></div>
-    ${r('firstOff','firstOn','पहली बुकिंग की छूट',s.firstOff,'%')}
-    ${r('refOff','refOn','रेफरल की छूट',s.refOff,'%')}
-  </div>
+    ${r('firstOff','firstOn','पहली बुकिंग की छूट',s.firstOff,'%')}${r('refOff','refOn','रेफरल की छूट',s.refOff,'%')}</div>
   <div class="card"><h2>मैसेज</h2>
     <label class="f" for="tplRem" style="margin-top:0">रिमाइंडर मैसेज</label><textarea id="tplRem">${esc(s.tplRem)}</textarea>
     <label class="f" for="tplBday">जन्मदिन मैसेज</label><textarea id="tplBday">${esc(s.tplBday)}</textarea>
-    <p class="muted small" style="margin:8px 0 0">इन्हें लिख सकते हो: {नाम} {दुकान} {छूट} {लिंक}</p>
-  </div>
-  <button class="btn block" data-act="save">सेव करो</button>`;
+    <p class="muted small" style="margin:8px 0 0">इन्हें लिख सकते हो: {नाम} {दुकान} {छूट} {लिंक}</p></div>
+  <button class="btn block" data-act="save">सारी सेटिंग सेव करो</button>
+  <div class="card" style="margin-top:12px"><h2>डेटा अपने फोन में डाउनलोड करो</h2>
+    <div class="acts" style="margin-top:0"><button class="btn sm" data-act="dl" data-v="cu">ग्राहक लिस्ट (Excel)</button><button class="btn sm" data-act="dl" data-v="bk">बुकिंग (Excel)</button>
+    <button class="btn sm ghost" data-act="pdf" data-v="cu">ग्राहक लिस्ट (PDF)</button><button class="btn sm ghost" data-act="pdf" data-v="bk">बुकिंग (PDF)</button></div>
+    <p class="muted small" style="margin:8px 0 0">PDF के लिए खुलने वाली स्क्रीन में "Save as PDF" या "PDF में सेव" चुनो।</p></div>
+  <div class="card"><h2>पासवर्ड बदलो</h2><label class="f" for="np" style="margin-top:0">नया पासवर्ड (कम से कम 6 अक्षर)</label><input type="password" id="np" autocomplete="new-password">
+    <button class="btn sm ghost" style="margin-top:10px" data-act="pw">पासवर्ड बदलो</button></div>
+  <button class="btn block ghost" data-act="logout">लॉग-आउट</button>`;
 }
 
-/* ---------- रेंडर और इवेंट ---------- */
+/* ---------- सेटअप / होम ---------- */
+function setupView(){return `<div class="card"><h2>सेटअप बाक़ी है</h2><p class="muted" style="margin:0">कोड में सबसे ऊपर CFG वाले हिस्से में Supabase का Project URL और anon public key चिपकाओ, फिर पेज दोबारा खोलो।</p></div>`}
+function homeView(){return `<div class="card"><h2>दुकानदार के लिए</h2><p class="muted" style="margin:0 0 12px">अपनी दुकान बनाओ या लॉगिन करो।</p><a class="btn block" href="#dukandar">दुकानदार लॉगिन</a></div>
+  <div class="card"><h3>ग्राहक के लिए</h3><p class="muted" style="margin:0">बुकिंग के लिए दुकान पर लगा QR स्कैन करो या दुकानदार का भेजा लिंक खोलो।</p></div>`}
+
 function render(){
-  $('#shopname').textContent=S.set.shop;
-  $('#m-cust').setAttribute('aria-pressed',S.mode==='cust');
-  $('#m-own').setAttribute('aria-pressed',S.mode==='own');
-  $('#app').innerHTML=S.mode==='cust'?custView():ownView();
+  let h;
+  if(!configured||!sb)h=setupView();
+  else if(S.r.mode==='cust')h=custView();
+  else if(S.r.mode==='own')h=ownView();
+  else h=homeView();
+  $('#shopname').textContent=S.r.mode==='cust'&&S.pub?S.pub.name:S.r.mode==='own'&&S.shop?S.shop.name:'';
+  $('#app').innerHTML=h;
 }
-const val=id=>{const e=document.getElementById(id);return e?e.value:''};
+
+/* ---------- डाउनलोड ---------- */
+function tableData(w){
+  if(w==='cu')return{title:'ग्राहक लिस्ट',head:['नाम','मोबाइल','जन्मदिन','विज़िट','कुल ख़र्च','स्टार','आख़िरी विज़िट'],
+    rows:S.customers.map(c=>[c.name,c.phone,c.bday,c.visits,c.spent,c.stars,c.last_visit||''])};
+  return{title:'बुकिंग',head:['तारीख','समय','नाम','मोबाइल','सर्विस','रकम','स्थिति'],
+    rows:[...S.bookings].sort((a,b)=>b.date.localeCompare(a.date)||a.time.localeCompare(b.time)).map(b=>[b.date,b.time,b.customer_name,b.customer_phone,b.svc_names,b.total,ST[b.status]])};
+}
+function download(w){
+  const t=tableData(w);
+  const csv='\ufeff'+[t.head,...t.rows].map(r=>r.map(x=>'"'+String(x==null?'':x).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const u=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  const a=document.createElement('a');a.href=u;a.download=(w==='cu'?'grahak-list':'bookings')+'-'+T0+'.csv';document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),4000);
+}
+function pdf(w){
+  const t=tableData(w);
+  $('#printarea').innerHTML='<h2>'+esc(S.shop.name)+' – '+t.title+' ('+T0+')</h2><table><thead><tr>'+t.head.map(h=>'<th>'+esc(h)+'</th>').join('')+'</tr></thead><tbody>'+
+    t.rows.map(r=>'<tr>'+r.map(x=>'<td>'+esc(x)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+  window.print();
+}
+
+/* ---------- इवेंट ---------- */
 document.addEventListener('input',e=>{
-  const id=e.target.id;
-  if(id==='c-name')S.draft.name=e.target.value;
-  if(id==='c-phone'){S.draft.phone=e.target.value.replace(/\D/g,'');}
-  if(id==='c-bday')S.draft.bday=e.target.value;
+  const id=e.target.id,d=S.draft;
+  if(id==='c-name')d.name=e.target.value;
+  if(id==='c-phone')d.phone=e.target.value.replace(/\D/g,'');
+  if(id==='c-bday')d.bday=e.target.value;
   if(id==='q'){S.q=e.target.value;const pos=e.target.selectionStart;render();const q=$('#q');q.focus();q.setSelectionRange(pos,pos)}
 });
-document.addEventListener('change',e=>{
-  const t=e.target;if(t.dataset&&t.dataset.act==='pick'){
-    const a=S.draft[t.dataset.g];const v=t.dataset.v;const i=a.indexOf(v);
-    if(t.checked&&i<0)a.push(v);if(!t.checked&&i>=0)a.splice(i,1);render();
-  }
-  if(t.id==='c-phone'&&S.draft.phone.length>=10)render();
+document.addEventListener('change',async e=>{
+  const t=e.target;
+  if(t.dataset&&t.dataset.act==='pick'){const a=S.draft.svc,i=a.indexOf(t.dataset.v);if(t.checked&&i<0)a.push(t.dataset.v);if(!t.checked&&i>=0)a.splice(i,1);render()}
+  if(t.id==='c-phone'&&S.draft.phone.length===10&&sb){const{data}=await sb.rpc('get_stars',{p_slug:S.r.slug,p_phone:S.draft.phone});S.stars=data;render()}
 });
-document.addEventListener('click',e=>{
+const val=id=>{const e=document.getElementById(id);return e?e.value:''};
+const num=(id,mn,mx,df)=>{const v=parseInt(val(id),10);return isNaN(v)?df:Math.max(mn,Math.min(mx,v))};
+const chk=id=>{const e=document.getElementById(id);return !!(e&&e.checked)};
+document.addEventListener('click',async e=>{
   const b=e.target.closest('[data-act]');if(!b||b.tagName==='INPUT')return;
   const a=b.dataset.act,v=b.dataset.v,d=S.draft;
-  if(a==='mode'){S.mode=v;render();return}
-  if(a==='date'){d.date=v;d.time=null;render();return}
+  if(a==='authmode')e.preventDefault();
+  try{
+  if(a==='date'){d.date=v;d.time=null;render();await loadTaken(v);render();return}
   if(a==='time'){d.time=v;render();return}
-  if(a==='newbook'){S.done=null;S.draft={svc:[],add:[],date:T0,time:null,name:'',phone:'',bday:'',err:''};render();return}
+  if(a==='newbook'){S.done=null;S.draft={svc:[],date:T0,time:null,name:'',phone:'',bday:'',err:'',busy:false};S.stars=null;await loadTaken(T0);render();return}
   if(a==='book'){
     d.name=val('c-name').trim()||d.name;d.phone=(val('c-phone')||d.phone).replace(/\D/g,'');d.bday=val('c-bday')||d.bday;
-    const sv=d.svc.concat(d.add);
-    d.err=!sv.length?'पहले कोई सर्विस चुनो।':!d.time?'समय चुनो।':!d.name.trim()?'अपना नाम लिखो।':d.phone.length!==10?'मोबाइल नंबर 10 अंकों का होना चाहिए।':'';
+    d.err=!d.svc.length?'पहले कोई सर्विस चुनो।':!d.time?'समय चुनो।':d.name.trim().length<2?'अपना नाम लिखो।':d.phone.length!==10?'मोबाइल नंबर 10 अंकों का होना चाहिए।':'';
     if(d.err){render();return}
-    const total=sv.reduce((x,i)=>x+ALL.find(z=>z.id===i).p,0);
-    const bk={id:S.nextId++,date:d.date,time:d.time,name:d.name.trim(),phone:d.phone,svc:sv,total,st:'booked'};
-    S.bookings.push(bk);
-    if(!S.customers.some(c=>c.phone===d.phone)){
-      const bdm=d.bday?d.bday.slice(5):'';
-      S.customers.push({name:bk.name,phone:bk.phone,last:null,visits:0,spent:0,bday:bdm});
+    d.busy=true;render();
+    const{data,error}=await sb.rpc('create_booking',{p_slug:S.r.slug,p_name:d.name.trim(),p_phone:d.phone,p_bday:d.bday?d.bday.slice(5):'',p_date:d.date,p_time:d.time,p_svc:d.svc});
+    d.busy=false;
+    if(error){d.err=error.message;await loadTaken(d.date);render();return}
+    S.done=data;render();window.scrollTo(0,0);return;
+  }
+  if(a==='authmode'){S.auth={mode:v,err:'',busy:false};render();return}
+  if(a==='login'||a==='signup'){
+    const m=val('a-mob').replace(/\D/g,''),p=val('a-pass'),nm=val('a-shop').trim();
+    if(m.length!==10){S.auth.err='मोबाइल नंबर 10 अंकों का होना चाहिए।';render();return}
+    if(p.length<6){S.auth.err='पासवर्ड कम से कम 6 अक्षर का रखो।';render();return}
+    if(a==='signup'&&nm.length<2){S.auth.err='दुकान का नाम लिखो।';render();return}
+    S.auth.busy=true;S.auth.err='';render();
+    if(a==='login'){
+      const{data,error}=await sb.auth.signInWithPassword({email:mailOf(m),password:p});
+      S.auth.busy=false;
+      if(error){S.auth.err='मोबाइल नंबर या पासवर्ड गलत है।';render();return}
+      S.user=data.user;await loadOwner();render();return;
     }
-    S.done=bk;render();window.scrollTo(0,0);return;
+    const{data,error}=await sb.auth.signUp({email:mailOf(m),password:p});
+    S.auth.busy=false;
+    if(error){S.auth.err=/regist/i.test(error.message)?'यह नंबर पहले से जुड़ा है। लॉगिन करो।':error.message;render();return}
+    if(!data.session){S.auth.err='Supabase में Authentication → Providers → Email में "Confirm email" बंद करो, फिर दोबारा कोशिश करो।';render();return}
+    S.user=data.user;
+    const sh=await ask(sb.from('shops').insert({owner:S.user.id,slug:mkSlug(nm),name:nm,phone:m,settings:DEF}).select().single());
+    await ask(sb.from('services').insert(DEFSV.map((x,i)=>({shop_id:sh.id,name:x[0],price:x[1],is_addon:x[2],sort:i}))));
+    await loadOwner();render();toast('दुकान बन गई। सेटिंग में अपने रेट जाँच लो।');return;
   }
-  if(a==='login'){
-    if(val('l-pass')==='1234'){S.loggedIn=true;S.loginErr='';}else S.loginErr='पासवर्ड गलत है। डेमो पासवर्ड 1234 है।';
-    render();return;
-  }
-  if(a==='tab'){S.tab=v;render();return}
+  if(a==='logout'){await sb.auth.signOut();S.user=null;S.shop=null;S.auth={mode:'login',err:'',busy:false};render();return}
+  if(a==='tab'){S.tab=v;render();window.scrollTo(0,0);return}
   if(a==='bf'){S.bf=v;render();return}
   if(a==='st'){
-    const bk=S.bookings.find(x=>x.id==b.dataset.id);bk.st=v;
-    if(v==='done'){const c=S.customers.find(x=>x.phone===bk.phone);if(c){c.last=0;c.visits++;c.spent+=bk.total}}
-    render();toast(v==='done'?'पूरा हुआ। कमाई में जुड़ गया।':'बुकिंग अपडेट हो गई।');return;
+    const bk=S.bookings.find(x=>x.id===b.dataset.id);
+    await ask(sb.from('bookings').update({status:v}).eq('id',bk.id));bk.status=v;
+    if(v==='done'){const c=S.customers.find(x=>x.phone===bk.customer_phone);
+      if(c){const u={last_visit:T0,visits:c.visits+1,spent:c.spent+bk.total,stars:c.stars+1};await ask(sb.from('customers').update(u).eq('id',c.id));Object.assign(c,u)}}
+    render();toast(v==='done'?'पूरा हुआ। कमाई और स्टार में जुड़ गया।':'बुकिंग अपडेट हो गई।');return;
   }
-  if(a==='send'){const k=b.dataset.k;setTimeout(()=>{S.sent[k]=true;render()},50);return}
+  if(a==='send'){const k=b.dataset.k;setTimeout(async()=>{S.sent.add(k);render();try{await ask(sb.from('sent_log').upsert({shop_id:S.shop.id,key:k}))}catch(_){}},60);return}
+  if(a==='cuadd'){
+    const nm=val('cu-name').trim(),ph=val('cu-phone').replace(/\D/g,''),bd=val('cu-bday');
+    if(nm.length<2||ph.length!==10){toast('नाम और 10 अंकों का मोबाइल नंबर भरो।');return}
+    if(S.customers.some(c=>c.phone===ph)){toast('यह नंबर पहले से लिस्ट में है।');return}
+    const row=await ask(sb.from('customers').insert({shop_id:S.shop.id,name:nm,phone:ph,bday:bd?bd.slice(5):''}).select().single());
+    S.customers.push(row);render();toast('ग्राहक जुड़ गया।');return;
+  }
+  if(a==='reward'){const c=S.customers.find(x=>x.id===b.dataset.id),n=Math.max(0,c.stars-S.shop.settings.loy.need);
+    await ask(sb.from('customers').update({stars:n}).eq('id',c.id));c.stars=n;render();toast('इनाम दे दिया। स्टार घट गए।');return}
+  if(a==='offadd'){
+    const nm=val('of-name').trim(),off=num('of-off',0,100,0),end=val('of-end');
+    if(!nm||off<1||!end){toast('ऑफ़र का नाम, छूट % और आख़िरी तारीख भरो।');return}
+    const row=await ask(sb.from('offers').insert({shop_id:S.shop.id,name:nm,off_pct:off,end_date:end}).select().single());
+    S.offers.unshift(row);render();toast('ऑफ़र बन गया। ग्राहक पेज पर दिखेगा।');return;
+  }
+  if(a==='offtog'){const o=S.offers.find(x=>x.id===b.dataset.id);await ask(sb.from('offers').update({active:!o.active}).eq('id',o.id));o.active=!o.active;render();return}
+  if(a==='offdel'){await ask(sb.from('offers').delete().eq('id',b.dataset.id));S.offers=S.offers.filter(x=>x.id!==b.dataset.id);render();return}
+  if(a==='loysave'){
+    const st=Object.assign({},S.shop.settings,{loy:{on:chk('lo-on'),need:num('lo-need',2,30,10),reward:val('lo-reward').trim()||'1 कटिंग फ्री'}});
+    await ask(sb.from('shops').update({settings:st}).eq('id',S.shop.id));S.shop.settings=st;render();toast('लॉयल्टी सेटिंग सेव हो गई।');return;
+  }
+  if(a==='svadd'){
+    const nm=val('ns-name').trim(),pr=num('ns-price',0,9999,-1);
+    if(nm.length<2||pr<0){toast('सर्विस का नाम और रेट भरो।');return}
+    const row=await ask(sb.from('services').insert({shop_id:S.shop.id,name:nm,price:pr,is_addon:chk('ns-add'),sort:S.services.length+1}).select().single());
+    S.services.push(row);render();toast('सर्विस जुड़ गई।');return;
+  }
   if(a==='save'){
-    const n=(id,mx)=>Math.max(0,Math.min(mx,parseInt(val(id),10)||0));
-    const c=id=>document.getElementById(id).checked;
-    ALL.forEach(x=>{x.p=n('pr-'+x.id,9999);x.on=c('on-'+x.id)});
-    S.draft.svc=S.draft.svc.filter(i=>ALL.find(a=>a.id===i).on);S.draft.add=S.draft.add.filter(i=>ALL.find(a=>a.id===i).on);
-    Object.assign(S.set,{remDays:n('remDays',365),remOn:c('remDays-on'),bdayBefore:n('bdayBefore',60),bdayOn:c('bdayBefore-on'),bdayOff:n('bdayOff',100),
-      firstOff:n('firstOff',100),firstOn:c('firstOff-on'),refOff:n('refOff',100),refOn:c('refOff-on'),tplRem:val('tplRem'),tplBday:val('tplBday')});
-    render();toast('सेटिंग सेव हो गई।');return;
+    const s=S.shop.settings;
+    const st=Object.assign({},s,{open:num('open',0,23,10),close:num('close',1,24,20),lunch:num('lunch',0,23,0),
+      remDays:num('remDays',1,365,25),remOn:chk('remDays-on'),bdayBefore:num('bdayBefore',0,60,5),bdayOn:chk('bdayBefore-on'),bdayOff:num('bdayOff',0,100,20),
+      firstOff:num('firstOff',0,100,10),firstOn:chk('firstOff-on'),refOff:num('refOff',0,100,15),refOn:chk('refOff-on'),
+      tplRem:val('tplRem'),tplBday:val('tplBday')});
+    if(st.close<=st.open){toast('बंद होने का समय खुलने के बाद का रखो।');return}
+    await ask(sb.from('shops').update({settings:st}).eq('id',S.shop.id));S.shop.settings=st;
+    await Promise.all(S.services.map(x=>{const u={name:val('sn-'+x.id).trim()||x.name,price:num('sp-'+x.id,0,9999,x.price),active:chk('sa-'+x.id)};
+      return ask(sb.from('services').update(u).eq('id',x.id)).then(()=>Object.assign(x,u))}));
+    render();toast('सेटिंग सेव हो गई। ग्राहक को अब नया रेट दिखेगा।');return;
   }
+  if(a==='copy'){try{await navigator.clipboard.writeText(v);toast('लिंक कॉपी हो गया।')}catch(_){toast('कॉपी नहीं हुआ। लिंक को दबाकर रखो और कॉपी करो।')}return}
+  if(a==='dl'){download(v);return}
+  if(a==='pdf'){pdf(v);return}
+  if(a==='pw'){
+    const p=val('np');if(p.length<6){toast('पासवर्ड कम से कम 6 अक्षर का रखो।');return}
+    await ask({then:r=>sb.auth.updateUser({password:p}).then(r)});toast('पासवर्ड बदल गया।');return;
+  }
+  }catch(err){console.error(err);d.busy=false;S.auth.busy=false}
 });
-function route(){
-  const h=location.hash,demo=h==='#demo'||location.protocol==='file:';
-  $('#modeseg').hidden=!demo;$('#demonote').hidden=!demo;
-  if(!demo)S.mode=h==='#dukandar'?'own':'cust';
+
+addEventListener('hashchange',async()=>{S.r=route();await boot()});
+async function boot(){
   render();
+  if(!configured||!sb)return;
+  if(S.r.mode==='cust'&&!S.pub&&!S.pubErr)await loadPub();
+  if(S.r.mode==='own'&&!S.user){
+    const{data}=await sb.auth.getSession();
+    if(data.session){S.user=data.session.user;await loadOwner()}
+    render();
+  }
 }
-addEventListener('hashchange',route);
-route();
+boot();
 })();
 </script>
