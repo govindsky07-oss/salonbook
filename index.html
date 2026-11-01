@@ -216,6 +216,8 @@ function custView(){
 /* ---------- दुकानदार: लॉगिन ---------- */
 const mailOf=m=>'91'+m+'@salonbook.app';
 async function loadOwner(){
+  const ac=await sb.from('app_access').select('is_active').eq('user_id',S.user.id).maybeSingle();
+if(ac.data&&ac.data.is_active===false){await sb.auth.signOut();S.user=null;S.shop=null;S.auth.err='आपका ऐप अभी बंद है। चालू करवाने के लिए संपर्क करो।';return}
   const sh=await sb.from('shops').select('*').eq('owner',S.user.id).maybeSingle();
   S.shop=sh.data;if(!S.shop)return;
   S.shop.settings=Object.assign({},DEF,S.shop.settings||{});
